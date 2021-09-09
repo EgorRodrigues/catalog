@@ -2,7 +2,7 @@ from fastapi import FastAPI
 
 from src.config import database
 
-from .routers import units, items
+from .routers import items, units
 
 
 def create_app():
