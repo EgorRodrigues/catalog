@@ -1,10 +1,6 @@
 from dataclasses import dataclass, field
 
-
-@dataclass
-class Unit:
-    name: str
-    initial: str
+from src.units.models import Unit
 
 
 @dataclass
