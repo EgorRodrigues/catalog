@@ -10,8 +10,8 @@ class TestService:
         self,
         shelve_session,
         fake_repository,
-        unitin_schema,
+        unit_in_schema,
     ):
-        unit_in_db = await UnitService(fake_repository).prepare_create(unitin_schema)
-        assert len(shelve_session['units']) == 1
+        unit_in_db = await UnitService(fake_repository).prepare_create(unit_in_schema)
+        assert len(shelve_session["units"]) == 1
         assert isinstance(unit_in_db, UnitInDB)

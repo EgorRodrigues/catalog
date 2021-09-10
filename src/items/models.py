@@ -1,9 +1,7 @@
-from dataclasses import dataclass, field
-
-from src.units.models import Unit
+from dataclasses import dataclass
 
 
 @dataclass
 class Item:
     name: str
-    unit: Unit = field(init=False)
+    unit: str

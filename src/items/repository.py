@@ -22,18 +22,16 @@ class DatabaseRepository:
         items_table: Table,
     ):
         self.database = database
-        self.units_table = (units_table,)
-        self.items_table = (items_table,)
+        self.units_table = units_table
+        self.items_table = items_table
 
     async def add(self, item: Item) -> Dict:
-        unit_id = (
-            select([self.units_table.c.id])
-            .where(self.units_table.c.initial == item.unit)
-            .limit(1)
+        unit_id = select(self.units_table.c.id).where(
+            self.units_table.c.initial == item.unit
         )
         query = self.items_table.insert().values(
-            name=item.name,
-            unit=unit_id,
+            name=item.name, unit_id=unit_id.scalar_subquery()
         )
-        last_record_id = await self.database.execute(query=query)
+        print(query)
+        last_record_id = await self.database.execute(query)
         return {"id": last_record_id, **asdict(item)}

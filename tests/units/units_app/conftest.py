@@ -34,7 +34,7 @@ def fake_repository(shelve_session):
 
 
 @pytest.fixture
-def unitin_schema():
+def unit_in_schema():
     return UnitIn(
         name="Metros",
         initial="m",
