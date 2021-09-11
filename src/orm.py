@@ -36,6 +36,7 @@ services = Table(
     Column("code", String(15), nullable=False),
     Column("description", Text, nullable=False),
     Column("unit", Integer, ForeignKey("units.id"), nullable=False),
+    UniqueConstraint("code")
 )
 
 list_items = Table(

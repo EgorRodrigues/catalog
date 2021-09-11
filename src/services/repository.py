@@ -30,16 +30,15 @@ class DatabaseRepository:
         self.list_services_table = list_services_table
 
     async def add_item(self, item_list: List) -> bool:
-        key_list = ['quantity', 'items_list', 'service_id']
+        key_list = ["quantity", "items_list", "service_id"]
         query = self.list_items_table.insert().values(
             [dict(zip(key_list, item)) for item in item_list]
         )
         await self.database.execute(query)
         return True
 
-
     async def add_service(self, service_list: List) -> bool:
-        key_list = ['quantity', 'service_list', 'service_id']
+        key_list = ["quantity", "service_list", "service_id"]
         query = self.list_services_table.insert().values(
             [dict(zip(key_list, service)) for service in service_list]
         )
@@ -58,9 +57,13 @@ class DatabaseRepository:
         last_record_id = await self.database.execute(query)
 
         if service.inputs:
+            for i in service.inputs:
+                i.append(last_record_id)
             await self.add_item(service.inputs)
 
         if service.compositions:
+            for i in service.compositions:
+                i.append(last_record_id)
             await self.add_service(service.compositions)
 
         return {"id": last_record_id, **asdict(service)}
