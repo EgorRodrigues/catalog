@@ -1,10 +1,11 @@
 from dataclasses import dataclass
-from typing import List
+from typing import Optional
 
 
 @dataclass
 class Service:
+    code: str
     description: str
     unit: str
-    inputs: List
-    compositions: List
+    inputs: Optional = None
+    compositions: Optional = None

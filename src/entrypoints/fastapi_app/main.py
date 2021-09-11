@@ -2,7 +2,7 @@ from fastapi import FastAPI
 
 from src.config import database
 
-from .routers import items, units
+from .routers import items, services, units
 
 
 def create_app():
@@ -10,6 +10,7 @@ def create_app():
 
     app.include_router(units.router)
     app.include_router(items.router)
+    app.include_router(services.router)
 
     @app.on_event("startup")
     async def startup():

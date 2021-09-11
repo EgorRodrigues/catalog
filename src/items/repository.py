@@ -2,8 +2,7 @@ from dataclasses import asdict
 from typing import Dict, Protocol, runtime_checkable
 
 from databases import Database
-from sqlalchemy import Table
-from sqlalchemy.sql import select
+from sqlalchemy import Table, select
 
 from src.items.models import Item
 
@@ -30,8 +29,8 @@ class DatabaseRepository:
             self.units_table.c.initial == item.unit
         )
         query = self.items_table.insert().values(
-            name=item.name, unit_id=unit_id.scalar_subquery()
+            name=item.name,
+            unit_id=unit_id.scalar_subquery(),
         )
-        print(query)
         last_record_id = await self.database.execute(query)
         return {"id": last_record_id, **asdict(item)}

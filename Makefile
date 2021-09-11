@@ -1,7 +1,7 @@
-export PYTHONPATH=$(shell pwd)/src/
-export PYTHONDONTWRITEBYTECODE=1
-
-.PHONY=help
+#export PYTHONPATH=$(shell pwd)/src/
+#export PYTHONDONTWRITEBYTECODE=1
+#
+#.PHONY=help
 
 help:  ## This help
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST) | sort
@@ -75,8 +75,8 @@ migrate:  ## Apply migrations
 	@python -m alembic upgrade head
 
 
-
 ### Run section ###
+
 run:  ## Run server with default settings
 	@uvicorn --factory src.entrypoints.fastapi_app.main:create_app --reload
 
