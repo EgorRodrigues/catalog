@@ -12,14 +12,14 @@ class CompositionBase(BaseModel):
     unit: str
 
 
-class ServiceSchema(CompositionBase):
+class ServiceBase(CompositionBase):
     id: int
     quantity: Decimal
 
 
 class CompositionIn(CompositionBase):
     feedstock: Optional[List[Feedstock]]
-    services: Optional[List[ServiceSchema]]
+    services: Optional[List[ServiceBase]]
 
     @property
     def to_model(self) -> Composition:
