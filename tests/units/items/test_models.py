@@ -1,4 +1,4 @@
-from src.items.models import Item
+from src.feedstocks.models import Item
 
 
 class TestItem:

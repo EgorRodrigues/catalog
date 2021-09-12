@@ -69,10 +69,10 @@ test-matching: clean ## Run tests by match ex: make test-matching k=name_of_test
 ### Migrations DB section ###
 
 migrations: ## Create named migrations file. Ex: make migrations name=<migration_name>
-	@python -m alembic revision --autogenerate --message $(name)
+	@alembic revision --autogenerate --message $(name)
 
 migrate:  ## Apply migrations
-	@python -m alembic upgrade head
+	@alembic upgrade head
 
 
 ### Run section ###

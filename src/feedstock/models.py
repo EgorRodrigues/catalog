@@ -2,6 +2,6 @@ from dataclasses import dataclass
 
 
 @dataclass
-class Item:
+class Feedstock:
     name: str
     unit: str

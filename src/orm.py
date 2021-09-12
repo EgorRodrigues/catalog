@@ -21,38 +21,39 @@ units = Table(
     UniqueConstraint("initial"),
 )
 
-items = Table(
-    "items",
+feedstock = Table(
+    "feedstock",
     metadata,
     Column("id", Integer, primary_key=True, autoincrement=True),
     Column("name", Text, nullable=False),
     Column("unit_id", Integer, ForeignKey("units.id"), nullable=False),
+    UniqueConstraint('name', 'unit_id', name='feedstock_unique_constraint'),
 )
 
-services = Table(
-    "services",
+compositions = Table(
+    "compositions",
     metadata,
     Column("id", Integer, primary_key=True, autoincrement=True),
     Column("code", String(15), nullable=False),
     Column("description", Text, nullable=False),
     Column("unit", Integer, ForeignKey("units.id"), nullable=False),
-    UniqueConstraint("code")
+    UniqueConstraint("code"),
 )
 
-list_items = Table(
-    "list_items",
+compositions_feedstock = Table(
+    "compositions_feedstock",
     metadata,
     Column("id", Integer, primary_key=True, autoincrement=True),
     Column("quantity", Numeric, nullable=False),
-    Column("items_list", Integer, ForeignKey("items.id"), nullable=False),
-    Column("service_id", Integer, ForeignKey("services.id"), nullable=False),
+    Column("feedstock_id", Integer, ForeignKey("feedstock.id"), nullable=False),
+    Column("composition_id", Integer, ForeignKey("compositions.id"), nullable=False),
 )
 
-list_services = Table(
-    "list_services",
+compositions_services = Table(
+    "compositions_services",
     metadata,
     Column("id", Integer, primary_key=True, autoincrement=True),
     Column("quantity", Numeric, nullable=False),
-    Column("service_list", Integer, ForeignKey("services.id"), nullable=False),
-    Column("service_id", Integer, ForeignKey("services.id"), nullable=False),
+    Column("service_id", Integer, ForeignKey("compositions.id"), nullable=False),
+    Column("composition_id", Integer, ForeignKey("compositions.id"), nullable=False),
 )

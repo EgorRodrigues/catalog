@@ -4,15 +4,15 @@ from typing import Dict
 
 import pytest
 
-from src.items.models import Item
-from src.items.schemas import ItemIn
+from src.feedstocks.models import Item
+from src.feedstocks.schemas import ItemIn
 
 
 class FakeRepository:
     def __init__(self, session):
         self.id = 1
-        session["items"] = []
-        self.session = session["items"]
+        session["feedstock"] = []
+        self.session = session["feedstock"]
 
     async def add(self, item: Item) -> Dict:
         await asyncio.sleep(0.3)

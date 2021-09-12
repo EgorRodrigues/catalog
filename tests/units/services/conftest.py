@@ -1,7 +1,7 @@
 import pytest
 
-from src.items.models import Item
-from src.services.models import Service
+from src.compositions.models import Service
+from src.feedstocks.models import Item
 
 
 @pytest.fixture

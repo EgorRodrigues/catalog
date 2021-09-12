@@ -1,26 +1,26 @@
 from fastapi import APIRouter, status
 
+from src.compositions.repository import DatabaseRepository
+from src.compositions.schemas import CompositionIn, CompositionInDB
+from src.compositions.services import ServiceService
 from src.config import database
-from src.orm import items as items_table
-from src.orm import list_items as list_items_table
-from src.orm import list_services as list_services_table
-from src.orm import services as services_table
+from src.orm import feedstock as feedstock_table
+from src.orm import compositions_feedstock as compositions_feedstock_table
+from src.orm import compositions_services as  compositions_services_table
+from src.orm import compositions as compositions_table
 from src.orm import units as units_table
-from src.services.repository import DatabaseRepository
-from src.services.schemas import ServiceIn, ServiceInDB
-from src.services.services import ServiceService
 
-router = APIRouter(prefix="/services", tags=["services"])
+router = APIRouter(prefix="/compositions", tags=["compositions"])
 repository = DatabaseRepository(
     database,
     units_table,
-    items_table,
-    services_table,
-    list_items_table,
-    list_services_table,
+    feedstock_table,
+    compositions_table,
+    compositions_feedstock_table,
+    compositions_services_table,
 )
 
 
-@router.post("/", response_model=ServiceInDB, status_code=status.HTTP_201_CREATED)
-async def create(service: ServiceIn):
+@router.post("/", response_model=CompositionInDB, status_code=status.HTTP_201_CREATED)
+async def create(service: CompositionIn):
     return await ServiceService(repository).prepare_create(service)

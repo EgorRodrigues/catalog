@@ -1,4 +1,4 @@
-from src.services.models import Service
+from src.compositions.models import Service
 
 
 class TestService:
