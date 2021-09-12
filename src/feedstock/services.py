@@ -9,3 +9,6 @@ class FeedstockService:
     async def prepare_create(self, feedstock: FeedstockIn) -> FeedstockInDB:
         result = await self.repository.add(feedstock.to_model())
         return FeedstockInDB.from_dict(result)
+
+
+# todo Adicionar metodos de exclusão, modificação, listagem, e filtro

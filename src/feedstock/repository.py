@@ -7,6 +7,7 @@ from sqlalchemy import Table, select
 from src.feedstock.models import Feedstock
 
 
+# todo adicionar metodos  Delete, List, Update
 @runtime_checkable
 class Repository(Protocol):
     async def add(self, feedstock: Feedstock) -> Dict:

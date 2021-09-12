@@ -64,7 +64,9 @@ class DatabaseRepository:
         await self.database.execute(query)
         return True
 
-    async def _add_service(self, service: List[Service], last_composition_id: int) -> bool:
+    async def _add_service(
+        self, service: List[Service], last_composition_id: int
+    ) -> bool:
         values = []
         for service_item in service:
             values.append(

@@ -26,3 +26,6 @@ class FeedstockInDB(FeedstockBase):
             name=obj["name"],
             unit=obj["unit"],
         )
+
+
+# todo Criar esquemas de retorno de consulta do banco

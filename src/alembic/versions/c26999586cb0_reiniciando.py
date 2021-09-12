@@ -5,9 +5,9 @@ Revises:
 Create Date: 2021-09-12 01:26:17.387443
 
 """
-from alembic import op
 import sqlalchemy as sa
 
+from alembic import op
 
 # revision identifiers, used by Alembic.
 revision = "c26999586cb0"
@@ -49,9 +49,7 @@ def upgrade():
             ["units.id"],
         ),
         sa.PrimaryKeyConstraint("id"),
-        sa.UniqueConstraint(
-            "name", "unit_id", name="feedstock_unique_constraint"
-        ),
+        sa.UniqueConstraint("name", "unit_id", name="feedstock_unique_constraint"),
     )
     op.create_table(
         "compositions_feedstock",

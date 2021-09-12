@@ -1,10 +1,9 @@
 from decimal import Decimal
-from typing import List, Optional, Dict
+from typing import Dict, List, Optional
 
 from pydantic import BaseModel
 
 from src.compositions.models import Composition, Feedstock
-
 
 
 class CompositionBase(BaseModel):
