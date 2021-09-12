@@ -2,7 +2,7 @@ from src.compositions.repository import Repository
 from src.compositions.schemas import CompositionIn, CompositionInDB
 
 
-class ServiceService:
+class CompositionService:
     def __init__(self, repository: Repository):
         self.repository = repository
 

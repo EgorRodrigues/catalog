@@ -33,8 +33,10 @@ class Composition(_ParentCompositionDefaults, _ParentCompositionBase):
     def add_service(self, service: "Service"):
         self.services.append(service)
 
+
 @dataclass
 class _ParentServiceBase:
+    id: int
     quantity: Decimal
 
 

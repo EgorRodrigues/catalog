@@ -4,7 +4,7 @@ from typing import Dict, List, Protocol
 from databases import Database
 from sqlalchemy import Table, select
 
-from src.compositions.models import Composition, Feedstock
+from src.compositions.models import Composition, Feedstock, Service
 
 
 class Repository(Protocol):
@@ -29,7 +29,6 @@ class DatabaseRepository:
         self.compositions_feedstock_table = compositions_feedstock_table
         self.compositions_services_table = compositions_services_table
 
-
     async def add(self, composition: Composition) -> Dict:
         unit_id = select(self.units_table.c.id).where(
             self.units_table.c.initial == composition.unit
@@ -49,26 +48,32 @@ class DatabaseRepository:
 
         return {"id": last_composition_id, **asdict(composition)}
 
-
-    async def _add_feedstock(self, feedstock: List[Feedstock], last_composition_id: int) -> bool:
+    async def _add_feedstock(
+        self, feedstock: List[Feedstock], last_composition_id: int
+    ) -> bool:
         values = []
         for feedstock_item in feedstock:
-            values.append({
-                "quantity": feedstock_item.quantity,
-                "feedstock_id": feedstock_item.id,
-                "composition_id": last_composition_id
-            })
+            values.append(
+                {
+                    "quantity": feedstock_item.quantity,
+                    "feedstock_id": feedstock_item.id,
+                    "composition_id": last_composition_id,
+                }
+            )
         query = self.compositions_feedstock_table.insert().values(values)
         await self.database.execute(query)
         return True
 
-    async def _add_service(self, service_list: List, last_record_id: int) -> bool:
-        ...
-        # for i in service_list:
-        #     i.append(last_record_id)
-        # key_list = ["quantity", "service_list", "service_id"]
-        # query = self.list_services_table.insert().values(
-        #     [dict(zip(key_list, service)) for service in service_list]
-        # )
-        # await self.database.execute(query)
-        # return True
+    async def _add_service(self, service: List[Service], last_composition_id: int) -> bool:
+        values = []
+        for service_item in service:
+            values.append(
+                {
+                    "quantity": service_item.quantity,
+                    "service_id": service_item.id,
+                    "composition_id": last_composition_id,
+                }
+            )
+        query = self.compositions_services_table.insert().values(values)
+        await self.database.execute(query)
+        return True

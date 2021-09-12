@@ -1,9 +1,10 @@
-from typing import List
+from decimal import Decimal
+from typing import List, Optional, Dict
 
 from pydantic import BaseModel
 
-from src.compositions.models import Feedstock
-from src.compositions.models import Composition, Service
+from src.compositions.models import Composition, Feedstock
+
 
 
 class CompositionBase(BaseModel):
@@ -12,9 +13,14 @@ class CompositionBase(BaseModel):
     unit: str
 
 
+class ServiceSchema(CompositionBase):
+    id: int
+    quantity: Decimal
+
+
 class CompositionIn(CompositionBase):
-    feedstock: List[Feedstock]
-    services: List[Service]
+    feedstock: Optional[List[Feedstock]]
+    services: Optional[List[ServiceSchema]]
 
     @property
     def to_model(self) -> Composition:
@@ -26,9 +32,10 @@ class CompositionIn(CompositionBase):
             services=self.services,
         )
 
+
 class CompositionInDB(CompositionBase):
     id: int
 
-    @property
-    def from_dict(self):
+    @staticmethod
+    def from_dict(obj):
         ...
