@@ -1,6 +1,6 @@
-from src.feedstocks.models import Item
+from src.feedstock.models import Feedstock
 
 
-class TestItem:
-    def test_should_create_item_instance(self, item_model):
-        assert isinstance(item_model, Item)
+class TestFeedstock:
+    def test_should_create_Feedstock_instance(self, feedstock_model):
+        assert isinstance(feedstock_model, Feedstock)

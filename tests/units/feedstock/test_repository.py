@@ -1,4 +1,4 @@
-from src.feedstocks.repository import Repository
+from src.feedstock.repository import Repository
 
 
 class TestItem:

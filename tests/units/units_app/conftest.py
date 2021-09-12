@@ -1,6 +1,6 @@
 import asyncio
 from dataclasses import asdict
-from typing import Dict
+from typing import Dict, List
 
 import pytest
 
@@ -22,6 +22,17 @@ class FakeRepository:
         self.id += 1
         return data
 
+    async def delete(self, pk: int) -> bool:
+        await asyncio.sleep(0.3)
+        for session in self.session:
+            if pk in session.keys():
+                self.session.remove(session)
+        return True
+
+    async def get_items(self) -> List:
+        await asyncio.sleep(0.3)
+        return self.session
+
 
 @pytest.fixture
 def unit_model():
@@ -35,7 +46,4 @@ def fake_repository(shelve_session):
 
 @pytest.fixture
 def unit_in_schema():
-    return UnitIn(
-        name="Metros",
-        initial="m",
-    )
+    return UnitIn(name="Metros", initial="m")

@@ -4,8 +4,8 @@ from typing import Dict
 
 import pytest
 
-from src.feedstocks.models import Item
-from src.feedstocks.schemas import ItemIn
+from src.feedstock.models import Feedstock
+from src.feedstock.schemas import FeedstockIn
 
 
 class FakeRepository:
@@ -14,18 +14,18 @@ class FakeRepository:
         session["feedstock"] = []
         self.session = session["feedstock"]
 
-    async def add(self, item: Item) -> Dict:
+    async def add(self, feedstock: Feedstock) -> Dict:
         await asyncio.sleep(0.3)
 
-        data = {"id": self.id, **asdict(item)}
+        data = {"id": self.id, **asdict(feedstock)}
         self.session.append({self.id: data})
         self.id += 1
         return data
 
 
 @pytest.fixture
-def item_model():
-    return Item(
+def feedstock_model():
+    return Feedstock(
         name="Pedra calcarea extraida da margem de rio",
         unit="m3",
     )
@@ -38,7 +38,7 @@ def fake_repository(shelve_session):
 
 @pytest.fixture
 def item_in_schema():
-    return ItemIn(
+    return FeedstockIn(
         name="Pedra calcarea extraida da margem de rio",
         unit="m3",
     )

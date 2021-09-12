@@ -1,7 +1,7 @@
 import pytest
 
-from src.feedstocks.schemas import ItemInDB
-from src.feedstocks.services import ItemService
+from src.feedstock.schemas import FeedstockInDB
+from src.feedstock.services import FeedstockService
 
 
 class TestService:
@@ -12,6 +12,8 @@ class TestService:
         fake_repository,
         item_in_schema,
     ):
-        unit_in_db = await ItemService(fake_repository).prepare_create(item_in_schema)
+        unit_in_db = await FeedstockService(fake_repository).prepare_create(
+            item_in_schema
+        )
         assert len(shelve_session["feedstock"]) == 1
-        assert isinstance(unit_in_db, ItemInDB)
+        assert isinstance(unit_in_db, FeedstockInDB)

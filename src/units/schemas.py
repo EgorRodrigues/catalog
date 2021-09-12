@@ -26,3 +26,7 @@ class UnitInDB(UnitBase):
             name=obj["name"],
             initial=obj["initial"],
         )
+
+
+class UnitOut(UnitBase):
+    id: int
