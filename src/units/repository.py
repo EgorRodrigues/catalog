@@ -15,7 +15,7 @@ class Repository(Protocol):
     async def delete(self, pk: int) -> bool:
         """Method responsible for deleting the item in the db"""
 
-    async def get_items(self) -> List:
+    async def get_all(self) -> List:
         """Method responsible for deleting the item in the db"""
 
 
@@ -39,7 +39,7 @@ class DatabaseRepository:
         result = await self.database.execute(query=query)
         return bool(result)
 
-    async def get_items(self) -> List:
+    async def get_all(self) -> List:
         query = self.table.select()
         rows = await self.database.fetch_all(query=query)
         result = [dict(row) for row in rows]

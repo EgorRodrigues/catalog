@@ -22,6 +22,9 @@ class FakeRepository:
         self.id += 1
         return data
 
+    async def _(self):
+        ...
+
 
 @pytest.fixture
 def feedstock_model():

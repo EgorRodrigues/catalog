@@ -17,5 +17,5 @@ class UnitService:
         return bool(result)
 
     async def prepare_list(self) -> List:
-        result = await self.repository.get_items()
+        result = await self.repository.get_all()
         return result

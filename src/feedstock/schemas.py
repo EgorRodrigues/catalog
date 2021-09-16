@@ -1,3 +1,5 @@
+from typing import Dict
+
 from pydantic import BaseModel
 
 from src.feedstock.models import Feedstock
@@ -28,4 +30,13 @@ class FeedstockInDB(FeedstockBase):
         )
 
 
-# todo Criar esquemas de retorno de consulta do banco
+class FeedstockOut(FeedstockBase):
+    id: int
+
+    @staticmethod
+    def from_dict(obj) -> "FeedstockOut":
+        return FeedstockOut(
+            id=obj["id"],
+            name=obj["name"],
+            unit=obj["unit"],
+        )
