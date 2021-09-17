@@ -5,6 +5,6 @@ from decimal import Decimal
 
 @dataclass
 class price:
-    date: datetime
+    date_create: datetime
     price: Decimal
     feedstock: int

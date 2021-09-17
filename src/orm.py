@@ -3,6 +3,7 @@ from sqlalchemy import (
     ForeignKey,
     Integer,
     MetaData,
+    DateTime,
     Numeric,
     String,
     Table,
@@ -17,8 +18,17 @@ units = Table(
     metadata,
     Column("id", Integer, primary_key=True, autoincrement=True),
     Column("name", String(50), nullable=False),
-    Column("initial", String(10), nullable=False),
-    UniqueConstraint("initial"),
+    Column("slug", String(10), nullable=False),
+    UniqueConstraint("slug"),
+)
+
+prices = Table(
+    "prices",
+    metadata,
+    Column("id", Integer, primary_key=True, autoincrement=True),
+    Column("date_create", DateTime, nullable=False),
+    Column("price", Numeric, nullable=False),
+    Column('feedstock_id', Integer, ForeignKey("feedstock.id"), nullable=False)
 )
 
 feedstock = Table(
