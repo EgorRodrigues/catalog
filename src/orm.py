@@ -1,9 +1,9 @@
 from sqlalchemy import (
     Column,
+    DateTime,
     ForeignKey,
     Integer,
     MetaData,
-    DateTime,
     Numeric,
     String,
     Table,
@@ -28,7 +28,7 @@ prices = Table(
     Column("id", Integer, primary_key=True, autoincrement=True),
     Column("date_create", DateTime, nullable=False),
     Column("price", Numeric, nullable=False),
-    Column('feedstock_id', Integer, ForeignKey("feedstock.id"), nullable=False)
+    Column("feedstock_id", Integer, ForeignKey("feedstock.id"), nullable=False),
 )
 
 feedstock = Table(
