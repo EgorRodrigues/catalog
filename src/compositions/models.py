@@ -10,6 +10,7 @@ class Feedstock:
     name: str
     unit: str
     quantity: Decimal
+    # price: List
 
 
 @dataclass
