@@ -1,5 +1,3 @@
-from typing import Dict
-
 from pydantic import BaseModel
 
 from src.feedstock.models import Feedstock
@@ -11,6 +9,8 @@ class FeedstockBase(BaseModel):
 
 
 class FeedstockIn(FeedstockBase):
+
+    @property
     def to_model(self) -> Feedstock:
         return Feedstock(
             name=self.name,

@@ -19,7 +19,7 @@ async def create(feedstock: FeedstockIn) -> FeedstockInDB:
 
 
 @router.get("/", response_model=List[FeedstockOut], status_code=status.HTTP_200_OK)
-async def list_feedstock() -> List:
+async def get_items() -> List:
     return await FeedstockService(repository).prepare_list()
 
 
