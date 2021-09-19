@@ -11,6 +11,9 @@ class Repository(Protocol):
     async def add(self, composition: Composition) -> Dict:
         """Method responsible for including the service in the db"""
 
+    async def get_all(self) -> List[Composition]:
+        """Method responsible for get all compositions in the db"""
+
 
 class DatabaseRepository:
     def __init__(
@@ -79,3 +82,15 @@ class DatabaseRepository:
         query = self.compositions_services_table.insert().values(values)
         await self.database.execute(query)
         return True
+
+    async def get_all(self) -> List:
+        query = select(
+            [
+                self.compositions_table.c.code,
+                self.compositions_table.c.description,
+                self.units_table.c.initial.label("unit"),
+            ]
+        ).select_from(self.compositions_table.join(self.units_table))
+        rows = await self.database.fetch_all(query=query)
+        result = [dict(row) for row in rows]
+        return result

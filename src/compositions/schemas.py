@@ -1,5 +1,5 @@
 from decimal import Decimal
-from typing import Dict, List, Optional
+from typing import List, Optional
 
 from pydantic import BaseModel
 
@@ -37,4 +37,23 @@ class CompositionInDB(CompositionBase):
 
     @staticmethod
     def from_dict(obj):
-        ...
+        return CompositionInDB(
+            id=obj["id"],
+            code=obj["code"],
+            description=obj["description"],
+            unit=obj["unit"],
+        )
+
+
+class CompositionOut(CompositionBase):
+    ...
+    # @staticmethod
+    # def from_dict(obj):
+    #     return CompositionOut(
+    #         code=obj["code"],
+    #         description=obj["description"],
+    #         unit=obj["unit_initial"],
+    #     )
+
+class CompositionServiceOut(CompositionIn):
+    ...
