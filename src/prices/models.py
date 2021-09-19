@@ -1,14 +1,14 @@
 from dataclasses import dataclass
 from datetime import datetime
 from decimal import Decimal
-from typing import List
 
 
+# Value Object
 @dataclass
 class Feedstock:
+    id: int
     name: str
     unit: str
-    price: List["Price"]
 
 
 @dataclass

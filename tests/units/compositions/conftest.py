@@ -1,7 +1,6 @@
 import pytest
 
 from src.compositions.models import Composition
-from src.feedstock.models import Feedstock
 
 
 @pytest.fixture

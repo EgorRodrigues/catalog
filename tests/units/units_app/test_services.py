@@ -2,7 +2,7 @@ from typing import List
 
 import pytest
 
-from src.units.schemas import UnitInDB, UnitOut
+from src.units.schemas import UnitInDB
 from src.units.services import UnitService
 
 
