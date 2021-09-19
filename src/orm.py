@@ -18,17 +18,8 @@ units = Table(
     metadata,
     Column("id", Integer, primary_key=True, autoincrement=True),
     Column("name", String(50), nullable=False),
-    Column("slug", String(10), nullable=False),
-    UniqueConstraint("slug"),
-)
-
-prices = Table(
-    "prices",
-    metadata,
-    Column("id", Integer, primary_key=True, autoincrement=True),
-    Column("date_create", DateTime, nullable=False),
-    Column("price", Numeric, nullable=False),
-    Column("feedstock_id", Integer, ForeignKey("feedstock.id"), nullable=False),
+    Column("initial", String(10), nullable=False),
+    UniqueConstraint("initial"),
 )
 
 feedstock = Table(
@@ -38,6 +29,15 @@ feedstock = Table(
     Column("name", Text, nullable=False),
     Column("unit_id", Integer, ForeignKey("units.id"), nullable=False),
     UniqueConstraint("name", "unit_id", name="feedstock_unique_constraint"),
+)
+
+prices = Table(
+    "prices",
+    metadata,
+    Column("id", Integer, primary_key=True, autoincrement=True),
+    Column("date_create", DateTime, nullable=False),
+    Column("price", Numeric, nullable=False),
+    Column("feedstock_id", Integer, ForeignKey("feedstock.id"), nullable=False),
 )
 
 compositions = Table(
