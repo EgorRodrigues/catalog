@@ -1,3 +1,4 @@
+import dataclasses
 from datetime import datetime
 from decimal import Decimal
 
@@ -11,6 +12,7 @@ class Feedstock(BaseModel):
     name: str
     unit: str
 
+
 class PriceBase(BaseModel):
     date_create: datetime
     price: Decimal
@@ -21,7 +23,9 @@ class PriceIn(PriceBase):
     @property
     def to_model(self) -> Price:
         return Price(
-            date_create=self.date_create, price=self.price, feedstock=self.feedstock,
+            date_create=self.date_create,
+            price=self.price,
+            feedstock=self.feedstock,
         )
 
 

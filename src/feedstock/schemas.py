@@ -9,7 +9,6 @@ class FeedstockBase(BaseModel):
 
 
 class FeedstockIn(FeedstockBase):
-
     @property
     def to_model(self) -> Feedstock:
         return Feedstock(

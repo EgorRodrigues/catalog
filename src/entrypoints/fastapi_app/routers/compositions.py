@@ -3,7 +3,12 @@ from typing import List
 from fastapi import APIRouter, status
 
 from src.compositions.repository import DatabaseRepository
-from src.compositions.schemas import CompositionIn, CompositionInDB, CompositionOut, CompositionServiceOut
+from src.compositions.schemas import (
+    CompositionIn,
+    CompositionInDB,
+    CompositionOut,
+    CompositionServiceOut,
+)
 from src.compositions.services import CompositionService
 from src.config import database
 from src.orm import compositions as compositions_table
@@ -33,6 +38,6 @@ async def get_items():
     return await CompositionService(repository).prepare_list()
 
 
-@router.get("/{pk}", response_model=CompositionServiceOut, status_code=status.HTTP_200_OK)
-async def get_items(pk: int) -> CompositionServiceOut:
-    return await CompositionService(repository).prepare_composition(pk)
+# @router.get("/{pk}", response_model=CompositionServiceOut, status_code=status.HTTP_200_OK)
+# async def get_items(pk: int) -> CompositionServiceOut:
+#     return await CompositionService(repository).prepare_composition(pk)

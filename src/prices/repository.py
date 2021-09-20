@@ -13,7 +13,12 @@ class Repository(Protocol):
 
 
 class DatabaseRepository:
-    def __init__(self, database: Database, feedstock_table: Table, prices_table: Table,):
+    def __init__(
+        self,
+        database: Database,
+        feedstock_table: Table,
+        prices_table: Table,
+    ):
         self.database = database
         self.feedstock_table = feedstock_table
         self.price_table = prices_table
