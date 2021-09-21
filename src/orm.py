@@ -18,8 +18,8 @@ units = Table(
     metadata,
     Column("id", Integer, primary_key=True, autoincrement=True),
     Column("name", String(50), nullable=False),
-    Column("initial", String(10), nullable=False),
-    UniqueConstraint("initial"),
+    Column("slug", String(10), nullable=False),
+    UniqueConstraint("slug"),
 )
 
 feedstock = Table(

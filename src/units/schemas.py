@@ -5,14 +5,14 @@ from src.units.models import Unit as UnitModel
 
 class UnitBase(BaseModel):
     name: str
-    initial: str
+    slug: str
 
 
 class UnitIn(UnitBase):
     def to_model(self) -> UnitModel:
         return UnitModel(
             name=self.name,
-            initial=self.initial,
+            slug=self.slug,
         )
 
 
@@ -24,7 +24,7 @@ class UnitInDB(UnitBase):
         return UnitInDB(
             id=obj["id"],
             name=obj["name"],
-            initial=obj["initial"],
+            slug=obj["slug"],
         )
 
 

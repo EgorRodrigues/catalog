@@ -36,7 +36,7 @@ class DatabaseRepository:
 
     async def add(self, feedstock: Feedstock) -> Dict:
         unit_id = select(self.units_table.c.id).where(
-            self.units_table.c.initial == feedstock.unit
+            self.units_table.c.slug == feedstock.unit
         )
         query = self.feedstock_table.insert().values(
             description=feedstock.description,
@@ -54,7 +54,7 @@ class DatabaseRepository:
         query = select(
             [
                 self.feedstock_table,
-                self.units_table.c.initial.label("unit"),
+                self.units_table.c.slug.label("unit"),
             ]
         ).select_from(self.feedstock_table.join(self.units_table))
         rows = await self.database.fetch_all(query=query)
@@ -66,7 +66,7 @@ class DatabaseRepository:
             select(
                 [
                     self.feedstock_table,
-                    self.units_table.c.initial.label("unit"),
+                    self.units_table.c.slug.label("unit"),
                 ]
             )
             .select_from(self.feedstock_table.join(self.units_table))

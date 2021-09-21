@@ -1,7 +1,7 @@
 from typing import List
 
 from src.units.repository import Repository
-from src.units.schemas import UnitIn, UnitInDB
+from src.units.schemas import UnitIn, UnitInDB, UnitOut
 
 
 class UnitService:
@@ -18,4 +18,8 @@ class UnitService:
 
     async def prepare_list(self) -> List:
         result = await self.repository.get_all()
+        return result
+
+    async def prepare_item(self, pk: int) -> UnitOut:
+        result = await self.repository.get_item(pk)
         return result

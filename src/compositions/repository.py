@@ -118,10 +118,13 @@ class DatabaseRepository:
                 self.feedstock_table.c.name,
                 # self.units_table.c.initial,
             )
-            .select_from(self.compositions_table.join(
-                self.compositions_feedstock_table,
-                self.compositions_table.c.id == self.compositions_feedstock_table.c.composition_id,
-            ))
+            .select_from(
+                self.compositions_table.join(
+                    self.compositions_feedstock_table,
+                    self.compositions_table.c.id
+                    == self.compositions_feedstock_table.c.composition_id,
+                )
+            )
             .where(self.compositions_feedstock_table.c.composition_id == pk)
         )
         print("Insumos >->", feedstock)
@@ -134,9 +137,12 @@ class DatabaseRepository:
                 self.compositions_table.c.description,
                 # self.units_table.c.initial,
             )
-            .select_from(self.compositions_table.join(
-                self.compositions_services_table,
-                self.compositions_table.c.id == self.compositions_services_table.c.composition_id)
+            .select_from(
+                self.compositions_table.join(
+                    self.compositions_services_table,
+                    self.compositions_table.c.id
+                    == self.compositions_services_table.c.composition_id,
+                )
             )
             .where(self.compositions_services_table.c.composition_id == pk)
         )
