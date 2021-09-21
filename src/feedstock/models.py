@@ -4,5 +4,5 @@ from dataclasses import dataclass
 # Model Feedstock
 @dataclass
 class Feedstock:
-    name: str
+    description: str
     unit: str

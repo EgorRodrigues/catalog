@@ -7,7 +7,7 @@ from decimal import Decimal
 @dataclass
 class Feedstock:
     id: int
-    name: str
+    description: str
     unit: str
 
 

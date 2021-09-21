@@ -82,3 +82,6 @@ run:  ## Run server with default settings
 
 init: dev-dependencies ## Initialize project
 	@cp -n .env.sample .env
+
+docker-postgres: ## Run docker POSTGRES
+	@docker run -p 5432:5432 -e POSTGRES_DB= db_test -e POSTGRES_PASSWORD=example -d postgres

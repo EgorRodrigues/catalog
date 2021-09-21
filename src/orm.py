@@ -26,9 +26,9 @@ feedstock = Table(
     "feedstock",
     metadata,
     Column("id", Integer, primary_key=True, autoincrement=True),
-    Column("name", Text, nullable=False),
+    Column("description", Text, nullable=False),
     Column("unit_id", Integer, ForeignKey("units.id"), nullable=False),
-    UniqueConstraint("name", "unit_id", name="feedstock_unique_constraint"),
+    UniqueConstraint("description", "unit_id", name="feedstock_unique_constraint"),
 )
 
 prices = Table(

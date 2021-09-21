@@ -4,7 +4,7 @@ from src.feedstock.models import Feedstock
 
 
 class FeedstockBase(BaseModel):
-    name: str
+    description: str
     unit: str
 
 
@@ -12,7 +12,7 @@ class FeedstockIn(FeedstockBase):
     @property
     def to_model(self) -> Feedstock:
         return Feedstock(
-            name=self.name,
+            description=self.description,
             unit=self.unit,
         )
 
@@ -24,7 +24,7 @@ class FeedstockInDB(FeedstockBase):
     def from_dict(obj) -> "FeedstockInDB":
         return FeedstockInDB(
             id=obj["id"],
-            name=obj["name"],
+            description=obj["description"],
             unit=obj["unit"],
         )
 
@@ -36,6 +36,6 @@ class FeedstockOut(FeedstockBase):
     def from_dict(obj) -> "FeedstockOut":
         return FeedstockOut(
             id=obj["id"],
-            name=obj["name"],
+            description=obj["description"],
             unit=obj["unit"],
         )

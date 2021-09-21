@@ -1,9 +1,11 @@
 from decimal import Decimal
 from typing import List, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, dataclasses
 
 from src.compositions.models import Composition, Feedstock
+
+Feedstock = dataclasses.dataclass(Feedstock)
 
 
 class CompositionBase(BaseModel):

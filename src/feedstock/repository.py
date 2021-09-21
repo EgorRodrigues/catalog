@@ -39,7 +39,7 @@ class DatabaseRepository:
             self.units_table.c.initial == feedstock.unit
         )
         query = self.feedstock_table.insert().values(
-            name=feedstock.name,
+            description=feedstock.description,
             unit_id=unit_id.scalar_subquery(),
         )
         last_record_id = await self.database.execute(query)

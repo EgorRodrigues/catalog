@@ -14,6 +14,9 @@ class Repository(Protocol):
     async def get_all(self) -> List[Composition]:
         """Method responsible for get all compositions in the db"""
 
+    async def get_item(self, pk: int) -> Composition:
+        """Method"""
+
 
 class DatabaseRepository:
     def __init__(
@@ -94,3 +97,57 @@ class DatabaseRepository:
         rows = await self.database.fetch_all(query=query)
         result = [dict(row) for row in rows]
         return result
+
+    async def get_item(self, pk: int) -> Composition:
+
+        composition = (
+            select(
+                self.compositions_table.c.code,
+                self.compositions_table.c.description,
+                self.units_table.c.initial,
+            )
+            .select_from(self.compositions_table.join(self.units_table))
+            .where(self.compositions_table.c.id == pk)
+        )
+        print("Compoisição >->", composition)
+
+        feedstock = (
+            select(
+                self.compositions_feedstock_table.c.feedstock_id,
+                self.compositions_feedstock_table.c.quantity,
+                self.feedstock_table.c.name,
+                # self.units_table.c.initial,
+            )
+            .select_from(self.compositions_table.join(
+                self.compositions_feedstock_table,
+                self.compositions_table.c.id == self.compositions_feedstock_table.c.composition_id,
+            ))
+            .where(self.compositions_feedstock_table.c.composition_id == pk)
+        )
+        print("Insumos >->", feedstock)
+
+        services = (
+            select(
+                self.compositions_table.c.id,
+                self.compositions_services_table.c.composition_id,
+                self.compositions_services_table.c.quantity,
+                self.compositions_table.c.description,
+                # self.units_table.c.initial,
+            )
+            .select_from(self.compositions_table.join(
+                self.compositions_services_table,
+                self.compositions_table.c.id == self.compositions_services_table.c.composition_id)
+            )
+            .where(self.compositions_services_table.c.composition_id == pk)
+        )
+        print("Serviços >->", services)
+
+        composition = await self.database.fetch_all(query=composition)
+        feedstock = await self.database.fetch_all(query=feedstock)
+        services = await self.database.fetch_all(query=services)
+
+        print("Compoisição >->", composition)
+        print("Insumos >->", feedstock)
+        print("Serviços >->", services)
+
+        # return result

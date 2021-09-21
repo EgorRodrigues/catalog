@@ -7,7 +7,7 @@ from typing import List, Optional
 @dataclass
 class Feedstock:
     id: int
-    name: str
+    description: str
     unit: str
     quantity: Decimal
     # prices: List

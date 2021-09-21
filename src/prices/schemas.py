@@ -1,4 +1,3 @@
-import dataclasses
 from datetime import datetime
 from decimal import Decimal
 
@@ -7,9 +6,10 @@ from pydantic import BaseModel
 from src.prices.models import Price
 
 
+# todo verificar problemas com o Pydantic na importação do Feedstock
 class Feedstock(BaseModel):
     id: int
-    name: str
+    description: str
     unit: str
 
 

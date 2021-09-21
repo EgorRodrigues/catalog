@@ -38,6 +38,8 @@ async def get_items():
     return await CompositionService(repository).prepare_list()
 
 
-# @router.get("/{pk}", response_model=CompositionServiceOut, status_code=status.HTTP_200_OK)
-# async def get_items(pk: int) -> CompositionServiceOut:
-#     return await CompositionService(repository).prepare_composition(pk)
+@router.get(
+    "/{pk}", response_model=CompositionServiceOut, status_code=status.HTTP_200_OK
+)
+async def get_item(pk: int) -> CompositionServiceOut:
+    return await CompositionService(repository).prepare_composition(pk)

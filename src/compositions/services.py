@@ -1,7 +1,12 @@
 from typing import List
 
 from src.compositions.repository import Repository
-from src.compositions.schemas import CompositionIn, CompositionInDB, CompositionOut
+from src.compositions.schemas import (
+    CompositionIn,
+    CompositionInDB,
+    CompositionOut,
+    CompositionServiceOut,
+)
 
 
 class CompositionService:
@@ -14,4 +19,8 @@ class CompositionService:
 
     async def prepare_list(self) -> List[CompositionOut]:
         result = await self.repository.get_all()
+        return result
+
+    async def prepare_composition(self, pk: int) -> CompositionServiceOut:
+        result = await self.repository.get_item(pk)
         return result
