@@ -23,12 +23,12 @@ class Repository(Protocol):
 
 
 class DatabaseRepository:
-    def __init__(self, database: Database, table: Table):
+    def __init__(self, database: Database, units_table: Table):
         self.database = database
-        self.table = table
+        self.units_table = units_table
 
     async def add(self, unit: Unit) -> Dict:
-        query = self.table.insert().values(
+        query = self.units_table.insert().values(
             name=unit.name,
             slug=unit.slug,
         )
@@ -36,19 +36,19 @@ class DatabaseRepository:
         return {"id": last_record_id, **asdict(unit)}
 
     async def delete(self, pk: int) -> bool:
-        query = self.table.delete().where(
-            self.table.c.id == pk,
+        query = self.units_table.delete().where(
+            self.units_table.c.id == pk,
         )
         result = await self.database.execute(query=query)
         return bool(result)
 
     async def get_all(self) -> List:
-        query = self.table.select()
+        query = self.units_table.select()
         rows = await self.database.fetch_all(query=query)
         result = [dict(row) for row in rows]
         return result
 
     async def get_item(self, pk: int) -> Dict:
-        query = self.table.select().where(self.table.c.id == pk)
-        result = await self.database.execute(query=query)
-        return {**result}
+        query = self.units_table.select().where(self.units_table.c.id == pk)
+        result = await self.database.fetch_one(query=query)
+        return dict(result)

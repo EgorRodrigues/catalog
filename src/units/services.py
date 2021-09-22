@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Dict
 
 from src.units.repository import Repository
 from src.units.schemas import UnitIn, UnitInDB, UnitOut
@@ -20,6 +20,10 @@ class UnitService:
         result = await self.repository.get_all()
         return result
 
-    async def prepare_item(self, pk: int) -> UnitOut:
+    async def prepare_item(self, pk: int) -> Dict:
         result = await self.repository.get_item(pk)
         return result
+
+    async def get_slug(self, pk: int) -> str:
+        result = await self.prepare_item(pk)
+        return result['slug']

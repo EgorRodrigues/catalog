@@ -17,6 +17,11 @@ async def get_items():
     return await UnitService(repository).prepare_list()
 
 
+@router.get("/{pk}", response_model=UnitOut, status_code=status.HTTP_200_OK)
+async def get_item(pk: int):
+    return await UnitService(repository).prepare_item(pk)
+
+
 @router.post("/", response_model=UnitInDB, status_code=status.HTTP_201_CREATED)
 async def create(unit: UnitIn):
     return await UnitService(repository).prepare_create(unit)

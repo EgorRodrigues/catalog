@@ -15,5 +15,5 @@ class AsyncClient:
 
 
 class AsyncClientService(AsyncClient):
-    async def get_slug(self, pk):
-        return await UnitService(repository).prepare_list()
+    async def get_slug(self, pk: int):
+        return await UnitService(repository).get_slug(pk)
