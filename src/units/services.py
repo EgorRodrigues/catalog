@@ -1,4 +1,4 @@
-from typing import List, Dict
+from typing import Dict, List
 
 from src.units.repository import Repository
 from src.units.schemas import UnitIn, UnitInDB, UnitOut
@@ -26,4 +26,8 @@ class UnitService:
 
     async def get_slug(self, pk: int) -> str:
         result = await self.prepare_item(pk)
-        return result['slug']
+        return result["slug"]
+
+    async def get_id_by_slug(self, slug: str) -> int:
+        result = await self.repository.get_item_by_slug(slug)
+        return result["id"]

@@ -19,7 +19,7 @@ class Repository(Protocol):
     async def get_all(self) -> List:
         """Method responsible for geting the list feedstock in the db"""
 
-    async def get_item(self, pk) -> FeedstockOut:
+    async def get_item(self, pk) -> Dict:
         """Method responsible for excluding the feedstock in the db"""
 
 
@@ -35,12 +35,9 @@ class DatabaseRepository:
         self.feedstock_table = items_table
 
     async def add(self, feedstock: Feedstock) -> Dict:
-        unit_id = select(self.units_table.c.id).where(
-            self.units_table.c.slug == feedstock.unit
-        )
         query = self.feedstock_table.insert().values(
             description=feedstock.description,
-            unit_id=unit_id.scalar_subquery(),
+            unit_id=feedstock.unit,
         )
         last_record_id = await self.database.execute(query)
         return {"id": last_record_id, **asdict(feedstock)}
@@ -51,26 +48,12 @@ class DatabaseRepository:
         return bool(result)
 
     async def get_all(self) -> List:
-        query = select(
-            [
-                self.feedstock_table,
-                self.units_table.c.slug.label("unit"),
-            ]
-        ).select_from(self.feedstock_table.join(self.units_table))
+        query = select(self.feedstock_table)
         rows = await self.database.fetch_all(query=query)
         result = [dict(row) for row in rows]
         return result
 
-    async def get_item(self, pk: int) -> FeedstockOut:
-        query = (
-            select(
-                [
-                    self.feedstock_table,
-                    self.units_table.c.slug.label("unit"),
-                ]
-            )
-            .select_from(self.feedstock_table.join(self.units_table))
-            .where(self.feedstock_table.c.id == pk)
-        )
+    async def get_item(self, pk: int) -> Dict:
+        query = select(self.feedstock_table).where(self.feedstock_table.c.id == pk)
         result = await self.database.fetch_one(query=query)
-        return FeedstockOut.from_dict(result)
+        return {**result}

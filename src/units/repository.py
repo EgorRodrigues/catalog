@@ -21,6 +21,9 @@ class Repository(Protocol):
     async def get_item(self, pk: int) -> Dict:
         """Method responsible for return an item in the db"""
 
+    async def get_item_by_slug(self, slug: str) -> Dict:
+        """Method responsible for return an item in the db"""
+
 
 class DatabaseRepository:
     def __init__(self, database: Database, units_table: Table):
@@ -50,5 +53,10 @@ class DatabaseRepository:
 
     async def get_item(self, pk: int) -> Dict:
         query = self.units_table.select().where(self.units_table.c.id == pk)
+        result = await self.database.fetch_one(query=query)
+        return dict(result)
+
+    async def get_item_by_slug(self, slug: str) -> Dict:
+        query = self.units_table.select().where(self.units_table.c.slug == slug)
         result = await self.database.fetch_one(query=query)
         return dict(result)
