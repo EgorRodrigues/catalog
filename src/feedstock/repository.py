@@ -5,7 +5,6 @@ from databases import Database
 from sqlalchemy import Table, select
 
 from src.feedstock.models import Feedstock
-from src.feedstock.schemas import FeedstockOut
 
 
 @runtime_checkable
@@ -27,12 +26,10 @@ class DatabaseRepository:
     def __init__(
         self,
         database: Database,
-        units_table: Table,
-        items_table: Table,
+        feedstock_table: Table,
     ):
         self.database = database
-        self.units_table = units_table
-        self.feedstock_table = items_table
+        self.feedstock_table = feedstock_table
 
     async def add(self, feedstock: Feedstock) -> Dict:
         query = self.feedstock_table.insert().values(

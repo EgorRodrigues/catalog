@@ -14,14 +14,10 @@ from src.config import database
 from src.orm import compositions as compositions_table
 from src.orm import compositions_feedstock as compositions_feedstock_table
 from src.orm import compositions_services as compositions_services_table
-from src.orm import feedstock as feedstock_table
-from src.orm import units as units_table
 
 router = APIRouter(prefix="/compositions", tags=["compositions"])
 repository = DatabaseRepository(
     database,
-    units_table,
-    feedstock_table,
     compositions_table,
     compositions_feedstock_table,
     compositions_services_table,
