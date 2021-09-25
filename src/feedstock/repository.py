@@ -40,7 +40,9 @@ class DatabaseRepository:
         return {"id": last_record_id, **asdict(feedstock)}
 
     async def delete(self, pk: int) -> bool:
-        query = self.feedstock_table.delete().where(self.feedstock_table.c.id == pk)
+        query = self.feedstock_table.delete().where(
+            self.feedstock_table.c.id == pk
+        )  # noqa
         result = self.database.execute(query)
         return bool(result)
 
@@ -51,6 +53,8 @@ class DatabaseRepository:
         return result
 
     async def get_item(self, pk: int) -> Dict:
-        query = select(self.feedstock_table).where(self.feedstock_table.c.id == pk)
+        query = select(self.feedstock_table).where(
+            self.feedstock_table.c.id == pk
+        )  # noqa
         result = await self.database.fetch_one(query=query)
         return {**result}

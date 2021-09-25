@@ -11,18 +11,21 @@ router = APIRouter(prefix="/price", tags=["Price"])
 repository = DatabaseRepository(database, feedstock_table, prices_table)
 
 
-@router.post("/", response_model=PriceInDB, status_code=status.HTTP_201_CREATED)
+@router.post("/", response_model=PriceInDB, status_code=status.HTTP_201_CREATED)  # noqa
 async def create(price: PriceIn) -> PriceInDB:
     return await PriceService(repository).prepare_create(price)
 
 
 #
-# @router.get("/", response_model=List[FeedstockOut], status_code=status.HTTP_200_OK)
+# @router.get("/", response_model=List[FeedstockOut],
+# status_code=status.HTTP_200_OK)
 # async def list_feedstock() -> List:
 #     return await FeedstockService(repository).prepare_list()
 #
 #
-# @router.get("/{pk}", response_model=FeedstockOut, status_code=status.HTTP_200_OK)
+# @router.get("/{pk}",
+# response_model=FeedstockOut,
+# status_code=status.HTTP_200_OK) noqa
 # async def get_item(pk: int) -> FeedstockOut:
 #     return await FeedstockService(repository).prepare_item(pk)
 #

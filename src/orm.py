@@ -28,7 +28,9 @@ feedstock = Table(
     Column("id", Integer, primary_key=True, autoincrement=True),
     Column("description", Text, nullable=False),
     Column("unit_id", Integer, ForeignKey("units.id"), nullable=False),
-    UniqueConstraint("description", "unit_id", name="feedstock_unique_constraint"),
+    UniqueConstraint(
+        "description", "unit_id", name="feedstock_unique_constraint"
+    ),  # noqa
 )
 
 prices = Table(
@@ -37,7 +39,7 @@ prices = Table(
     Column("id", Integer, primary_key=True, autoincrement=True),
     Column("date_create", DateTime, nullable=False),
     Column("price", Numeric, nullable=False),
-    Column("feedstock_id", Integer, ForeignKey("feedstock.id"), nullable=False),
+    Column("feedstock_id", Integer, ForeignKey("feedstock.id"), nullable=False),  # noqa
 )
 
 compositions = Table(
@@ -55,8 +57,18 @@ compositions_feedstock = Table(
     metadata,
     Column("id", Integer, primary_key=True, autoincrement=True),
     Column("quantity", Numeric, nullable=False),
-    Column("feedstock_id", Integer, ForeignKey("feedstock.id"), nullable=False),
-    Column("composition_id", Integer, ForeignKey("compositions.id"), nullable=False),
+    Column(
+        "feedstock_id",
+        Integer,
+        ForeignKey("feedstock.id"),
+        nullable=False,
+    ),
+    Column(
+        "composition_id",
+        Integer,
+        ForeignKey("compositions.id"),
+        nullable=False,
+    ),
 )
 
 compositions_services = Table(
@@ -64,6 +76,16 @@ compositions_services = Table(
     metadata,
     Column("id", Integer, primary_key=True, autoincrement=True),
     Column("quantity", Numeric, nullable=False),
-    Column("service_id", Integer, ForeignKey("compositions.id"), nullable=False),
-    Column("composition_id", Integer, ForeignKey("compositions.id"), nullable=False),
+    Column(
+        "service_id",
+        Integer,
+        ForeignKey("compositions.id"),
+        nullable=False,
+    ),  # noqa
+    Column(
+        "composition_id",
+        Integer,
+        ForeignKey("compositions.id"),
+        nullable=False,
+    ),  # noqa
 )

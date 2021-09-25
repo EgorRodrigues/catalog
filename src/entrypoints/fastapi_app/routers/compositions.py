@@ -24,18 +24,28 @@ repository = DatabaseRepository(
 )
 
 
-@router.post("/", response_model=CompositionInDB, status_code=status.HTTP_201_CREATED)
+@router.post(
+    "/",
+    response_model=CompositionInDB,
+    status_code=status.HTTP_201_CREATED,
+)
 async def create(composition: CompositionIn):
     return await CompositionService(repository).prepare_create(composition)
 
 
-@router.get("/", response_model=List[CompositionOut], status_code=status.HTTP_200_OK)
+@router.get(
+    "/",
+    response_model=List[CompositionOut],
+    status_code=status.HTTP_200_OK,
+)
 async def get_items():
     return await CompositionService(repository).prepare_list()
 
 
 @router.get(
-    "/{pk}", response_model=CompositionServiceOut, status_code=status.HTTP_200_OK
+    "/{pk}",
+    response_model=CompositionServiceOut,
+    status_code=status.HTTP_200_OK,
 )
 async def get_item(pk: int) -> CompositionServiceOut:
     return await CompositionService(repository).prepare_composition(pk)

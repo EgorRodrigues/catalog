@@ -1,7 +1,7 @@
 from typing import Dict, List
 
 from src.units.repository import Repository
-from src.units.schemas import UnitIn, UnitInDB, UnitOut
+from src.units.schemas import UnitIn, UnitInDB
 
 
 class UnitService:

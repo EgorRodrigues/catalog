@@ -6,7 +6,7 @@ from typing import List, Optional
 # Value Object
 @dataclass
 class Feedstock:
-    id: int
+    feedstock_id: int
     description: str
     unit: str
     quantity: Decimal
@@ -37,10 +37,14 @@ class Composition(_ParentCompositionDefaults, _ParentCompositionBase):
 
 @dataclass
 class _ParentServiceBase:
-    id: int
+    composition_id: int
     quantity: Decimal
 
 
 @dataclass
-class Service(_ParentCompositionDefaults, _ParentServiceBase, _ParentCompositionBase):
+class Service(
+    _ParentCompositionDefaults,
+    _ParentServiceBase,
+    _ParentCompositionBase,
+):
     ...

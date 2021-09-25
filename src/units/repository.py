@@ -57,6 +57,6 @@ class DatabaseRepository:
         return dict(result)
 
     async def get_item_by_slug(self, slug: str) -> Dict:
-        query = self.units_table.select().where(self.units_table.c.slug == slug)
+        query = self.units_table.select().where(self.units_table.c.slug == slug)  # noqa
         result = await self.database.fetch_one(query=query)
         return dict(result)

@@ -14,7 +14,7 @@ class Repository(Protocol):
     async def get_all(self) -> List[Composition]:
         """Method responsible for get all compositions in the db"""
 
-    async def get_item(self, pk: int) -> Composition:
+    async def get_item(self, pk: int) -> Dict:
         """Method"""
 
 
@@ -40,7 +40,10 @@ class DatabaseRepository:
         last_composition_id = await self.database.execute(query)
 
         if composition.feedstock:
-            await self._add_feedstock(composition.feedstock, last_composition_id)
+            await self._add_feedstock(
+                composition.feedstock,
+                last_composition_id,
+            )
 
         if composition.services:
             await self._add_service(composition.services, last_composition_id)
@@ -55,7 +58,7 @@ class DatabaseRepository:
             values.append(
                 {
                     "quantity": feedstock_item.quantity,
-                    "feedstock_id": feedstock_item.id,
+                    "feedstock_id": feedstock_item.feedstock_id,
                     "composition_id": last_composition_id,
                 }
             )
@@ -71,7 +74,7 @@ class DatabaseRepository:
             values.append(
                 {
                     "quantity": service_item.quantity,
-                    "service_id": service_item.id,
+                    "service_id": service_item.composition_id,
                     "composition_id": last_composition_id,
                 }
             )
@@ -85,29 +88,29 @@ class DatabaseRepository:
         result = [dict(row) for row in rows]
         return result
 
-    async def get_item(self, pk: int) -> Composition:
+    async def get_item(self, pk: int) -> Dict:
 
         composition = select(self.compositions_table).where(
             self.compositions_table.c.id == pk
         )
-        print("Compoisição >->", composition)
 
         feedstock = select(self.compositions_feedstock_table).where(
             self.compositions_feedstock_table.c.composition_id == pk
         )
-        print("Insumos >->", feedstock)
 
         services = select(self.compositions_services_table).where(
             self.compositions_services_table.c.composition_id == pk
         )
-        print("Serviços >->", services)
 
-        composition = await self.database.fetch_all(query=composition)
+        composition = await self.database.fetch_one(query=composition)
         feedstock = await self.database.fetch_all(query=feedstock)
         services = await self.database.fetch_all(query=services)
 
-        print("Compoisição >->", composition)
-        print("Insumos >->", feedstock)
-        print("Serviços >->", services)
+        result = {
+            **dict(composition),
+            "quantity": 1,
+            "feedstock": [dict(row) for row in feedstock],
+            "services": [dict(row) for row in services],
+        }
 
-        # return result
+        return result
