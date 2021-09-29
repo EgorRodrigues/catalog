@@ -3,9 +3,7 @@ from typing import Dict, List
 from src.compositions.models import Composition
 from src.compositions.repository import Repository
 from src.compositions.schemas import CompositionIn, CompositionInDB
-from src.feedstock.entrypoints.clients import (
-    AsyncClientService as FeedstockClient,
-)  # noqa
+from src.feedstock.entrypoints.clients import AsyncClientService as FeedstockClient
 
 
 class CompositionService:

@@ -4,13 +4,14 @@ from typing import List, Optional
 from pydantic import BaseModel
 
 from src.compositions.models import Composition
+from src.compositions.models import Feedstock
 
 # Feedstock = dataclasses.dataclass(Feedstock)
 
-
-class FeedstockSchema(BaseModel):
-    quantity: Decimal
-    feedstock_id: int
+#
+# class FeedstockSchema(BaseModel):
+#     quantity: Decimal
+#     feedstock_id: int
 
 
 class CompositionBase(BaseModel):
@@ -28,7 +29,7 @@ class ServiceIn(ServiceBase):
 
 
 class CompositionIn(CompositionBase):
-    feedstock: Optional[List[FeedstockSchema]]
+    feedstock: Optional[List[Feedstock]]
     services: Optional[List[ServiceIn]]
 
     @property
@@ -55,7 +56,7 @@ class CompositionInDB(CompositionBase):
         )
 
 
-class FeedstockOut(FeedstockSchema):
+class FeedstockOut(Feedstock):
     description: str
     unit: str
 

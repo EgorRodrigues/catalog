@@ -29,14 +29,22 @@ class FakeRepository:
                 self.session.remove(session)
         return True
 
-    async def get_items(self) -> List:
+    async def get_all(self) -> List:
         await asyncio.sleep(0.3)
         return self.session
 
+    async def get_item(self, pk: int) -> Dict:
+        ...
+
+    async def get_item_by_slug(self, slug: str) -> Dict:
+        ...
+
+
+dict_unit = {'name':"Metros", 'slug':"m"}
 
 @pytest.fixture
 def unit_model():
-    return Unit(name="Metros", initial="m")
+    return Unit(**dict_unit)
 
 
 @pytest.fixture
@@ -46,4 +54,4 @@ def fake_repository(shelve_session):
 
 @pytest.fixture
 def unit_in_schema():
-    return UnitIn(name="Metros", initial="m")
+    return UnitIn(**dict_unit)

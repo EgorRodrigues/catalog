@@ -17,6 +17,9 @@ class Repository(Protocol):
     async def get_item(self, pk: int) -> Dict:
         """Method"""
 
+    async def update(self, composition: Composition) -> Dict:
+        """Method"""
+
 
 class DatabaseRepository:
     def __init__(
@@ -114,3 +117,7 @@ class DatabaseRepository:
         }
 
         return result
+
+    async def update(self, composition: Composition) -> Dict:
+
+        return

@@ -149,4 +149,9 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
+
+# Webdrive Selenium
+
+chromedrive
+
 # End of https://www.toptal.com/developers/gitignore/api/python

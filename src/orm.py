@@ -81,11 +81,11 @@ compositions_services = Table(
         Integer,
         ForeignKey("compositions.id"),
         nullable=False,
-    ),  # noqa
+    ),
     Column(
         "composition_id",
         Integer,
         ForeignKey("compositions.id"),
         nullable=False,
-    ),  # noqa
+    ),
 )

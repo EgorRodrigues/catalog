@@ -1,6 +1,6 @@
 import asyncio
 from dataclasses import asdict
-from typing import Dict
+from typing import Dict, List
 
 import pytest
 
@@ -22,15 +22,21 @@ class FakeRepository:
         self.id += 1
         return data
 
-    async def _(self):
+    async def delete(self, pk: int) -> bool:
+        ...
+
+    async def get_all(self) -> List:
+        ...
+
+    async def get_item(self, pk) -> Dict:
         ...
 
 
 @pytest.fixture
 def feedstock_model():
     return Feedstock(
-        name="Pedra calcarea extraida da margem de rio",
-        unit="m3",
+        description="Lápis",
+        unit="un",
     )
 
 
@@ -42,6 +48,6 @@ def fake_repository(shelve_session):
 @pytest.fixture
 def item_in_schema():
     return FeedstockIn(
-        name="Pedra calcarea extraida da margem de rio",
-        unit="m3",
+        description="Lápis",
+        unit="un",
     )
