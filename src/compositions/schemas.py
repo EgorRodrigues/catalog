@@ -3,8 +3,7 @@ from typing import List, Optional
 
 from pydantic import BaseModel
 
-from src.compositions.models import Composition
-from src.compositions.models import Feedstock
+from src.compositions.models import Composition, Feedstock, Service
 
 # Feedstock = dataclasses.dataclass(Feedstock)
 
@@ -25,7 +24,7 @@ class ServiceBase(BaseModel):
 
 
 class ServiceIn(ServiceBase):
-    composition_id: int
+    service_id: int
 
 
 class CompositionIn(CompositionBase):
@@ -34,6 +33,12 @@ class CompositionIn(CompositionBase):
 
     @property
     def to_model(self) -> Composition:
+        if self.feedstock:
+            self._list_feedstock()
+
+        if self.services:
+            self._list_service()
+
         return Composition(
             code=self.code,
             description=self.description,
@@ -41,6 +46,18 @@ class CompositionIn(CompositionBase):
             feedstock=self.feedstock,
             services=self.services,
         )
+
+    def _list_feedstock(self):
+        feedstock_list = []
+        for feedstock in self.feedstock:
+            feedstock_list.append(Feedstock(feedstock.feedstock_id, feedstock.quantity))
+        self.feedstock = feedstock_list
+
+    def _list_service(self):
+        services_list = []
+        for service in self.services:
+            services_list.append(Service(service.service_id, service.quantity))
+        self.services = services_list
 
 
 class CompositionInDB(CompositionBase):

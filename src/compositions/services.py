@@ -4,15 +4,16 @@ from src.compositions.models import Composition
 from src.compositions.repository import Repository
 from src.compositions.schemas import CompositionIn, CompositionInDB
 from src.feedstock.entrypoints.clients import AsyncClientService as FeedstockClient
+from src.units.entrypoints.clients import AsyncClientService as UnitClient
 
 
 class CompositionService:
     def __init__(self, repository: Repository):
         self.repository = repository
 
-    async def prepare_create(
-        self, composition: CompositionIn
-    ) -> CompositionInDB:  # noqa
+    async def prepare_create(self, composition: CompositionIn) -> CompositionInDB:
+        composition.unit = await UnitClient().get_id(slug=composition.unit)
+        breakpoint()
         result = await self.repository.add(composition.to_model)
         return CompositionInDB.from_dict(result)
 

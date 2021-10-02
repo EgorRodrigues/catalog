@@ -1,5 +1,5 @@
 from dataclasses import asdict
-from typing import Dict, List, Protocol
+from typing import Dict, List, Protocol, runtime_checkable
 
 from databases import Database
 from sqlalchemy import Table, select
@@ -7,6 +7,7 @@ from sqlalchemy import Table, select
 from src.compositions.models import Composition, Feedstock, Service
 
 
+@runtime_checkable
 class Repository(Protocol):
     async def add(self, composition: Composition) -> Dict:
         """Method responsible for including the service in the db"""
@@ -77,7 +78,7 @@ class DatabaseRepository:
             values.append(
                 {
                     "quantity": service_item.quantity,
-                    "service_id": service_item.composition_id,
+                    "service_id": service_item.service_id,
                     "composition_id": last_composition_id,
                 }
             )
@@ -119,5 +120,4 @@ class DatabaseRepository:
         return result
 
     async def update(self, composition: Composition) -> Dict:
-
-        return
+        ...

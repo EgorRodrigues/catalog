@@ -65,7 +65,8 @@ test-coverage: clean ## Run tests with coverage output
 test-matching: clean ## Run tests by match ex: make test-matching k=name_of_test
 	@pytest -k $(k) tests/
 
-
+test-first-fail:
+	@pytest -x tests/
 ### Migrations DB section ###
 
 migrations: ## Create named migrations file. Ex: make migrations name=<migration_name>
@@ -84,4 +85,4 @@ init: dev-dependencies ## Initialize project
 	@cp -n .env.sample .env
 
 docker-postgres: ## Run docker POSTGRES
-	@docker run -p 5432:5432 -e POSTGRES_DB= db_test -e POSTGRES_PASSWORD=example -d postgres
+	@docker run -p 5432:5432 -e POSTGRES_DB=db_test -e POSTGRES_PASSWORD=example -d postgres

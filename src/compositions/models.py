@@ -20,7 +20,7 @@ class Service:
 class Composition:
     code: str
     description: str
-    unit: str
+    unit: int
     feedstock: Optional[List[Feedstock]] = None
     services: Optional[List[Service]] = None
 

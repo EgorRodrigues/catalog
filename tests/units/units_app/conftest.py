@@ -40,7 +40,8 @@ class FakeRepository:
         ...
 
 
-dict_unit = {'name':"Metros", 'slug':"m"}
+dict_unit = {"name": "Metros", "slug": "m"}
+
 
 @pytest.fixture
 def unit_model():
